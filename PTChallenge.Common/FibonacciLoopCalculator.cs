@@ -12,8 +12,8 @@ public class FibonacciLoopCalculator : IFibonacciCalculator
         if (n == 1)
             return 1;
 
-        var preparent = 0;
-        var parent = 1;
+        BigInteger preparent = 0;
+        BigInteger parent = 1;
         for (BigInteger i = 2; i <= n; i++)
         {
             var current = preparent + parent;
