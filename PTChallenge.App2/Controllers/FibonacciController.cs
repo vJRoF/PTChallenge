@@ -1,5 +1,6 @@
 using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
+using PTChallenge.App1;
 using PTChallenge.Common;
 
 namespace PTChallenge.App2.Controllers;
@@ -8,24 +9,29 @@ namespace PTChallenge.App2.Controllers;
 [Route("[controller]")]
 public class FibonacciController : ControllerBase
 {
-    private readonly IFibonacciCalculator _calculator;
     private readonly ILogger<FibonacciController> _logger;
+    private readonly Worker _worker;
 
     public FibonacciController(
-        IFibonacciCalculator calculator,
-        ILogger<FibonacciController> logger)
+        ILogger<FibonacciController> logger,
+        Worker worker)
     {
-        _calculator = calculator;
         _logger = logger;
+        _worker = worker;
     }
 
     [HttpGet]
     public IActionResult Get([FromQuery] string i)
     {
         if (!BigInteger.TryParse(i, out var n))
+        {
+            _logger.LogError(55466, "Прислали непонятно что: {Number}", i);
             return ValidationProblem(detail: $"Неправильный формат числа \"{i}\"");
+        }
 
-        Task.Run(() => _calculator.Calculate(n));
+#pragma warning disable CS4014
+        _worker.CalculateAndSendAsync(n, HttpContext.RequestAborted);
+#pragma warning restore CS4014
 
         return NoContent();
     }

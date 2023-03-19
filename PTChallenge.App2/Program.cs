@@ -1,4 +1,8 @@
+using EasyNetQ;
+using PTChallenge.App1;
+using PTChallenge.App2;
 using PTChallenge.Common;
+using PTChallenge.Common.Calculators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +12,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IFibonacciCalculator, FibonacciLoopCalculator>();
+builder.Services.RegisterEasyNetQ("host=localhost", register => register.EnableMicrosoftLogging());
+builder.Services.AddScoped<IFibonacciCalculator, FibonacciLoopCalculator>();
+builder.Services.AddScoped<Worker>();
+builder.Services.AddScoped<INumberSender, RabbitSender>();
 
 var app = builder.Build();
 

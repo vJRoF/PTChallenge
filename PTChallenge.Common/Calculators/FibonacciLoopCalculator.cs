@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace PTChallenge.Common;
+namespace PTChallenge.Common.Calculators;
 
 public class FibonacciLoopCalculator : IFibonacciCalculator
 {
