@@ -1,6 +1,5 @@
 using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
-using PTChallenge.App2.Models;
 using PTChallenge.Common;
 
 namespace PTChallenge.App2.Controllers;
@@ -21,17 +20,13 @@ public class FibonacciController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Get([FromQuery]string i)
+    public IActionResult Get([FromQuery] string i)
     {
         if (!BigInteger.TryParse(i, out var n))
             return ValidationProblem(detail: $"Неправильный формат числа \"{i}\"");
-        
-        var calcResult = _calculator.Calculate(n);
-        
-        return Ok(
-            new CalculateFibonacciModel
-            {
-                Answer = $"{calcResult}"
-            });
+
+        Task.Run(() => _calculator.Calculate(n));
+
+        return NoContent();
     }
 }

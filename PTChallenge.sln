@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTChallenge.Tests", "PTChal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTChallenge.App2", "PTChallenge.App2\PTChallenge.App2.csproj", "{FF47611C-7223-4127-963A-DDD4B7635620}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTChallenge.App1", "PTChallenge.App1\PTChallenge.App1.csproj", "{55D2E1CE-AEF6-4225-AA57-72E8F77AD598}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTChallenge.App1", "PTChallenge.App1\PTChallenge.App1.csproj", "{E0FEE715-C9F2-452A-9839-1851FBE61D20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +26,9 @@ Global
 		{FF47611C-7223-4127-963A-DDD4B7635620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF47611C-7223-4127-963A-DDD4B7635620}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF47611C-7223-4127-963A-DDD4B7635620}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55D2E1CE-AEF6-4225-AA57-72E8F77AD598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55D2E1CE-AEF6-4225-AA57-72E8F77AD598}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55D2E1CE-AEF6-4225-AA57-72E8F77AD598}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55D2E1CE-AEF6-4225-AA57-72E8F77AD598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0FEE715-C9F2-452A-9839-1851FBE61D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0FEE715-C9F2-452A-9839-1851FBE61D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0FEE715-C9F2-452A-9839-1851FBE61D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0FEE715-C9F2-452A-9839-1851FBE61D20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
