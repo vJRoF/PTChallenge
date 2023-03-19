@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using EasyNetQ;
 using PTChallenge.App1;
-using PTChallenge.App1.Models;
+using PTChallenge.Common.Models;
 
 namespace PTChallenge.App2;
 

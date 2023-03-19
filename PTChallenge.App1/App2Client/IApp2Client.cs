@@ -1,8 +1,8 @@
-﻿using System.Numerics;
+﻿using PTChallenge.Common.Models;
 
-namespace PTChallenge.App1;
+namespace PTChallenge.App1.App2Client;
 
 public interface IApp2Client
 {
-    Task Calculate(BigInteger i, CancellationToken ct);
+    Task Calculate(NumberMessageModel message, CancellationToken ct);
 }

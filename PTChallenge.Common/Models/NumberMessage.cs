@@ -1,4 +1,4 @@
-﻿namespace PTChallenge.App1.Models;
+﻿namespace PTChallenge.Common.Models;
 
 /// <summary>
 ///     Сообщение с числом для расчёта
@@ -8,5 +8,5 @@ public class NumberMessage
     /// <summary>
     ///     Число для расчёта
     /// </summary>
-    public string Number { get; set; }
+    public string Number { get; init; } = default!;
 }

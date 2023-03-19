@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+﻿using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,12 +20,12 @@ public class App2Client : IApp2Client
     /// <summary>
     ///     Отправить число на вычисление
     /// </summary>
-    /// <param name="i">Значние числа</param>
+    /// <param name="message">Сообщение для отпрвки</param>
     /// <param name="ct"><see cref="CancellationToken"/></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task Calculate(BigInteger i, CancellationToken ct)
+    public async Task Calculate(NumberMessageModel message, CancellationToken ct)
     {
-        var response = await _client.GetAsync($"Fibonacci?i={i}", ct);
+        var response = await _client.PostAsync("api/fibonacci/calculate", JsonContent.Create(message), ct);
         if (response.IsSuccessStatusCode)
             return;
         else

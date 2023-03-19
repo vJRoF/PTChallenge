@@ -1,7 +1,7 @@
 using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
-using PTChallenge.App1;
 using PTChallenge.Common;
+using PTChallenge.Common.Models;
 
 namespace PTChallenge.App2.Controllers;
 
@@ -20,13 +20,13 @@ public class FibonacciController : ControllerBase
         _worker = worker;
     }
 
-    [HttpGet]
-    public IActionResult Get([FromQuery] string i)
+    [HttpPost("/api/fibonacci/calculate")]
+    public IActionResult Get([FromBody] NumberMessage message)
     {
-        if (!BigInteger.TryParse(i, out var n))
+        if (!BigInteger.TryParse(message.Number, out var n))
         {
-            _logger.LogError(55466, "Прислали непонятно что: {Number}", i);
-            return ValidationProblem(detail: $"Неправильный формат числа \"{i}\"");
+            _logger.LogError(55466, "Прислали непонятно что: {Number}", message.Number);
+            return ValidationProblem(detail: $"Неправильный формат числа \"{message.Number}\"");
         }
 
 #pragma warning disable CS4014

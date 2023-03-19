@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PTChallenge.App1;
 using PTChallenge.App1.App2Client;
-using PTChallenge.App1.Models;
 using PTChallenge.Common;
 using PTChallenge.Common.Calculators;
+using PTChallenge.Common.Models;
 
 var serviceCollection = new ServiceCollection();
 RegisterAppServices(serviceCollection);
