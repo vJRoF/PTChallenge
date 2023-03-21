@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
-namespace PTChallenge.App1.App2Client;
+namespace PTChallenge.App1;
 
 /// <summary>
 ///     Клиент для доступа к REST API приложения 2

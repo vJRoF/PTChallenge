@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PTChallenge.App1.App2Client;
+namespace PTChallenge.App1;
 
 /// <summary>
 ///     Модель для отправки запроса на вычисление по Rest API
@@ -8,5 +8,5 @@ namespace PTChallenge.App1.App2Client;
 public class NumberMessageModel
 {
     [JsonPropertyName("number")]
-    public string Number { get; set; } = default!;
+    public string Number { get; init; } = default!;
 }

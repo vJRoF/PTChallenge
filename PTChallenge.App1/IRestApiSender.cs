@@ -1,6 +1,4 @@
 ﻿using System.Numerics;
-using PTChallenge.App1.App2Client;
-using PTChallenge.Common.Models;
 
 namespace PTChallenge.App1;
 

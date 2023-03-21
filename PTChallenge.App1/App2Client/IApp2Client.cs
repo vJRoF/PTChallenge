@@ -1,6 +1,6 @@
 ﻿using PTChallenge.Common.Models;
 
-namespace PTChallenge.App1.App2Client;
+namespace PTChallenge.App1;
 
 public interface IApp2Client
 {
