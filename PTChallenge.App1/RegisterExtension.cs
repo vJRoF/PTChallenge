@@ -22,6 +22,7 @@ public static class RegisterExtension
         serviceCollection.AddTransient<IApp2Client, App2Client>();
         serviceCollection.AddTransient<INumberSender, RestApiSender>();
         serviceCollection.AddTransient<NumberMessageHandler>();
+        serviceCollection.AddMemoryCache();
     
         serviceCollection
             .AddHttpClient(App2Client.Name, client =>

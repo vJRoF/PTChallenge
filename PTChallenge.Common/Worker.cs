@@ -40,6 +40,6 @@ public class Worker
         var result = _calculator.Calculate(i);
         await _sender.SendNumberAsync(i + 1, ct);
         
-        _logger.LogInformation(4289293, "Значение {Result} вычислено за {Time}", result, stopwotch.Elapsed);
+        _logger.LogInformation(4289293, "Для номера {Number} значение {Result} вычислено за {Time}", i, result, stopwotch.Elapsed);
     }
 }

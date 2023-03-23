@@ -16,6 +16,7 @@ builder.Services.RegisterEasyNetQ("host=localhost", register => register.EnableM
 builder.Services.AddScoped<IFibonacciCalculator, FibonacciLoopCalculator>();
 builder.Services.AddScoped<Worker>();
 builder.Services.AddScoped<INumberSender, RabbitSender>();
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
