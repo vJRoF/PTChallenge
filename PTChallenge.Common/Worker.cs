@@ -38,7 +38,7 @@ public class Worker
         _logger.LogInformation(6541882, "Получено число для вычисления: {Number}", i);
         
         var result = _calculator.Calculate(i);
-        await _sender.SendNumberAsync(result, ct);
+        await _sender.SendNumberAsync(i + 1, ct);
         
         _logger.LogInformation(4289293, "Значение {Result} вычислено за {Time}", result, stopwotch.Elapsed);
     }
