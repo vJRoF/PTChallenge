@@ -1,5 +1,4 @@
 using EasyNetQ;
-using PTChallenge.App1;
 using PTChallenge.App2;
 using PTChallenge.Common;
 using PTChallenge.Common.Calculators;
@@ -14,8 +13,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.RegisterEasyNetQ("host=localhost", register => register.EnableMicrosoftLogging());
 builder.Services.AddScoped<IFibonacciCalculator, FibonacciLoopCalculator>();
-builder.Services.AddScoped<Worker>();
-builder.Services.AddScoped<INumberSender, RabbitSender>();
+builder.Services.AddSingleton<WorkerPool>();
+builder.Services.AddTransient<Worker.Factory>();
+builder.Services.AddTransient<INumberSender, RabbitSender>();
 builder.Services.AddMemoryCache();
 
 var app = builder.Build();

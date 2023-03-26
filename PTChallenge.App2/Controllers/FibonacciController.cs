@@ -10,27 +10,29 @@ namespace PTChallenge.App2.Controllers;
 public class FibonacciController : ControllerBase
 {
     private readonly ILogger<FibonacciController> _logger;
-    private readonly Worker _worker;
+    private readonly WorkerPool _workerPool;
 
     public FibonacciController(
         ILogger<FibonacciController> logger,
-        Worker worker)
+        WorkerPool workerPool)
     {
         _logger = logger;
-        _worker = worker;
+        _workerPool = workerPool;
     }
 
     [HttpPost("/api/fibonacci/calculate")]
-    public IActionResult Get([FromBody] NumberMessage message)
+    public IActionResult Get([FromBody] NumberMessageModel messageModel)
     {
-        if (!BigInteger.TryParse(message.Number, out var n))
+        if (!BigInteger.TryParse(messageModel.Number, out var n))
         {
-            _logger.LogError(55466, "Прислали непонятно что: {Number}", message.Number);
-            return ValidationProblem(detail: $"Неправильный формат числа \"{message.Number}\"");
+            _logger.LogError(55466, "Прислали непонятно что: {Number}", messageModel.Number);
+            return ValidationProblem(detail: $"Неправильный формат числа \"{messageModel.Number}\"");
         }
 
+        var worker = _workerPool.GetOrCreate(messageModel.ChainId);
 #pragma warning disable CS4014
-        _worker.CalculateAndSendAsync(n, HttpContext.RequestAborted);
+        
+        worker.CalculateAndSendAsync(n, HttpContext.RequestAborted);
 #pragma warning restore CS4014
 
         return NoContent();

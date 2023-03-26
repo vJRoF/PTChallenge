@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using System.Numerics;
+﻿using System.Numerics;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PTChallenge.App1;
-using PTChallenge.Common.Calculators;
+using PTChallenge.Common.Models;
 
 namespace PTChallenge.Common;
 
@@ -11,35 +10,76 @@ namespace PTChallenge.Common;
 /// </summary>
 public class Worker
 {
-    private readonly IFibonacciCalculator _calculator;
+    private BigInteger _previousNumber = 0;
     private readonly ILogger<Worker> _logger;
     private readonly INumberSender _sender;
+
+    public string ChainId { get; }
+    public string WorkerId { get; } = Guid.NewGuid().ToString("N");
     
-    public Worker(
-        IFibonacciCalculator calculator,
+    private Worker(
         ILogger<Worker> logger,
-        INumberSender sender)
+        INumberSender sender,
+        string chainId)
     {
-        _calculator = calculator;
         _logger = logger;
         _sender = sender;
-    }
-    
-    public async Task StartAsync(BigInteger n, CancellationToken ct)
-    {
-        await _sender.SendNumberAsync(n, ct);
+        ChainId = chainId;
     }
 
-    public async Task CalculateAndSendAsync(BigInteger i, CancellationToken ct)
+    private Worker(
+        ILogger<Worker> logger,
+        INumberSender sender)
+        : this (logger, sender, $"{Guid.NewGuid():N}"){}
+    
+    public async Task StartAsync(CancellationToken ct)
     {
-        var stopwotch = new Stopwatch();
-        stopwotch.Start();
+        var initialMessage = new NumberMessage
+        {
+            ChainId = ChainId,
+            Number = 1 // N(0) = 1
+        };
         
-        _logger.LogInformation(6541882, "Получено число для вычисления: {Number}", i);
+        _previousNumber = initialMessage.Number;
+        await _sender.SendNumberAsync(initialMessage, ct);
+    }
+
+    public async Task CalculateAndSendAsync(BigInteger n, CancellationToken ct)
+    {
+        var currentNumber = _previousNumber + n;
+        _logger.LogInformation(50935093, "Рассчитано следующеей число последовательности {Number}", currentNumber);
         
-        var result = _calculator.Calculate(i);
-        await _sender.SendNumberAsync(i + 1, ct);
+        var messageToSend = new NumberMessage
+        {
+            ChainId = ChainId,
+            Number = currentNumber
+        };
         
-        _logger.LogInformation(4289293, "Для номера {Number} значение {Result} вычислено за {Time}", i, result, stopwotch.Elapsed);
+        _previousNumber = currentNumber;
+        await _sender.SendNumberAsync(messageToSend, ct);
+    }
+
+    public class Factory
+    {
+        private readonly IServiceProvider _serviceProvider;
+
+        public Factory(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
+        public Worker Create()
+        {
+            var logger = _serviceProvider.GetService<ILoggerFactory>()!.CreateLogger<Worker>();
+            var numberSender = _serviceProvider.GetService<INumberSender>()!;
+            return new Worker(logger, numberSender);
+        }
+        
+        public Worker Create(string chainId)
+        {
+            var logger = _serviceProvider.GetService<ILoggerFactory>()!.CreateLogger<Worker>();
+            var numberSender = _serviceProvider.GetService<INumberSender>()!;
+            return new Worker(logger, numberSender, chainId);
+        }
     }
 }

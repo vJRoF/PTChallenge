@@ -4,18 +4,19 @@ using PTChallenge.Common.Models;
 
 namespace PTChallenge.App1.MessageHandlers;
 
-public class NumberMessageHandler : IMessageHandler<NumberMessage>
+public class NumberMessageHandler : IMessageHandler<NumberMessageModel>
 {
-    private readonly Worker _worker;
+    private readonly WorkerPool _workerPool;
 
-    public NumberMessageHandler(Worker worker)
+    public NumberMessageHandler(WorkerPool workerPool)
     {
-        _worker = worker;
+        _workerPool = workerPool;
     }
 
-    public async Task HandleAsync(NumberMessage message, CancellationToken ct)
+    public async Task HandleAsync(NumberMessageModel message, CancellationToken ct)
     {
-        var bigIntegerNumber = BigInteger.Parse(message.Number);
-        await _worker.CalculateAndSendAsync(bigIntegerNumber, ct);
+        var worker = _workerPool.GetOrCreate(message.ChainId);
+        var number = BigInteger.Parse(message.Number);
+        await worker.CalculateAndSendAsync(number, ct);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 using EasyNetQ;
-using PTChallenge.App1;
+using PTChallenge.Common;
 using PTChallenge.Common.Models;
 
 namespace PTChallenge.App2;
@@ -18,8 +18,13 @@ public class RabbitSender : INumberSender
     }
     
     /// <inheritdoc />
-    public async Task SendNumberAsync(BigInteger i, CancellationToken ct)
+    public async Task SendNumberAsync(NumberMessage message, CancellationToken ct)
     {
-        await _bus.PubSub.PublishAsync(new NumberMessage { Number = $"{i}" }, cancellationToken: ct);
+        var numberMessageModel = new NumberMessageModel
+        {
+            ChainId = message.ChainId,
+            Number = $"{message.Number}"
+        };
+        await _bus.PubSub.PublishAsync(numberMessageModel, cancellationToken: ct);
     }
 }

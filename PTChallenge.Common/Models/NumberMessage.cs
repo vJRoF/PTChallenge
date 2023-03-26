@@ -1,12 +1,19 @@
-﻿namespace PTChallenge.Common.Models;
+﻿using System.Numerics;
+
+namespace PTChallenge.Common.Models;
 
 /// <summary>
-///     Сообщение с числом для расчёта
+///     Сообщение с числом последовательности
 /// </summary>
 public class NumberMessage
 {
     /// <summary>
-    ///     Число для расчёта
+    ///     Идентификатор рассчитываемой последовательности
     /// </summary>
-    public string Number { get; init; } = default!;
+    public string ChainId { get; init; } = default!;
+    
+    /// <summary>
+    ///     Очередное число последовательности
+    /// </summary>
+    public BigInteger Number { get; init; } = default!;
 }

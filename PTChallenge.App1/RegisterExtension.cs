@@ -16,12 +16,13 @@ public static class RegisterExtension
                 logBuilder
                     .AddConsole()
                     .SetMinimumLevel(LogLevel.Trace));
-    
-        serviceCollection.AddTransient<Worker>();
+        
         serviceCollection.AddTransient<IFibonacciCalculator, FibonacciLoopCalculator>();
         serviceCollection.AddTransient<IApp2Client, App2Client>();
         serviceCollection.AddTransient<INumberSender, RestApiSender>();
         serviceCollection.AddTransient<NumberMessageHandler>();
+        serviceCollection.AddSingleton<WorkerPool>();
+        serviceCollection.AddTransient<Worker.Factory>();
         serviceCollection.AddMemoryCache();
     
         serviceCollection

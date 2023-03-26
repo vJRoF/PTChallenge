@@ -8,13 +8,10 @@ using PTChallenge.Common;
 using PTChallenge.Common.Models;
 
 // валидация входных параметров
-if (args.Length < 2)
-    throw new ArgumentException("Неверное число аргументов. Должно быть задано два числа:" +
-                                "- стартовое число последовательности" +
+if (args.Length != 1)
+    throw new ArgumentException("Неверное число аргументов. Должно быть задано одно число:" +
                                 "- количество параллельных расчётов");
-if (!BigInteger.TryParse(args[0], out var startNumber))
-    throw new ArgumentException($"Неправильно задано стартовое число последовательности: {args[0]}");
-if (!int.TryParse(args[1], out var dop))
+if (!int.TryParse(args[0], out var dop))
     throw new ArgumentException($"Неправильно задано количество параллельных расчётов: {args[0]}");
 
 // создание контейнера и регистрация зависимостей
@@ -24,17 +21,18 @@ var serviceProvider = serviceCollection.BuildServiceProvider();
 
 // подписка на сообщения
 var bus = serviceProvider.GetService<IBus>();
-bus!.PubSub.Subscribe<NumberMessage>(
+bus!.PubSub.Subscribe<NumberMessageModel>(
     subscriptionId: $"{Guid.NewGuid()}", 
     onMessage: async msg =>
         await serviceProvider.GetService<NumberMessageHandler>()!
             .HandleAsync(msg, CancellationToken.None));
 
+var workerPool = serviceProvider.GetService<WorkerPool>()!;
 // запуск параллельных цепочек расчётов
 for (var i = 0; i < dop; i++)
 {
-    var worker = serviceProvider.GetService<Worker>();
-    await worker!.StartAsync(startNumber, CancellationToken.None);
+    var worker = workerPool.Create();
+    await worker.StartAsync(CancellationToken.None);
 }
 
 

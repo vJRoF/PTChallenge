@@ -1,6 +1,6 @@
-﻿using System.Numerics;
+﻿using PTChallenge.Common.Models;
 
-namespace PTChallenge.App1;
+namespace PTChallenge.Common;
 
 /// <summary>
 ///     Интерфейс для отправки заданий на вычисление в другое приложение
@@ -10,8 +10,7 @@ public interface INumberSender
     /// <summary>
     ///     Отправить число в другое приложение для вычисления значения Фибоначчи
     /// </summary>
-    /// <param name="i">Число</param>
-    /// <param name="ct"></param>
-    /// <returns></returns>
-    Task SendNumberAsync(BigInteger i, CancellationToken ct);
+    /// <param name="message"><see cref="NumberMessage"/></param>
+    /// <param name="ct"><see cref="CancellationToken"/></param>
+    Task SendNumberAsync(NumberMessage message, CancellationToken ct);
 }

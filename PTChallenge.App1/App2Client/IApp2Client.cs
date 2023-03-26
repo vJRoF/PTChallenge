@@ -4,5 +4,5 @@ namespace PTChallenge.App1;
 
 public interface IApp2Client
 {
-    Task Calculate(NumberMessageModel message, CancellationToken ct);
+    Task SendNumber(NumberMessageModel message, CancellationToken ct);
 }

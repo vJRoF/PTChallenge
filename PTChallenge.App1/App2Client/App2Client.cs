@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using PTChallenge.Common.Models;
 
 namespace PTChallenge.App1;
 
@@ -23,7 +24,7 @@ public class App2Client : IApp2Client
     /// <param name="message">Сообщение для отпрвки</param>
     /// <param name="ct"><see cref="CancellationToken"/></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task Calculate(NumberMessageModel message, CancellationToken ct)
+    public async Task SendNumber(NumberMessageModel message, CancellationToken ct)
     {
         var response = await _client.PostAsync("api/fibonacci/calculate", JsonContent.Create(message), ct);
         if (response.IsSuccessStatusCode)
